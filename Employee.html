@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/2e066fb4d2.js" crossorigin="anonymous"></script>
+    <title>Employee</title>
+  </head>
+  <style>
+    .c{
+      color: red;
+
+    }
+   
+    h4{
+      margin-left: 450px;
+    }
+    p
+      text: red;
+    }
+    b{
+text-color: red;
+    }
+    }
+    .btn2{
+      background-color: green;
+    }
+    .btn1{
+      background-color: grey;
+      border: grey;
+    }
+    .icon:hover {
+color: red;
+}
+  </style>
+  <body>
+    <div class="container">
+    <div id="show"></div>
+  </div>
+        <script type="text/javascript">
+          
+         
+
+
+const data = [{name:'Anna',email:'Anna45@email.com',age:27,dept:'Technology',gradCourse:'B.Tech',gradYear:2015,gradPerf:'Good',postgrad:false,workBefore:true,workEx:'0-1year'},
+{name:'Mary',email:'mary16@email.com',age:30,dept:'Accounts',gradCourse:'B.Com',gradYear:2015,gradPerf:'Good',postgrad:true,workBefore:false,workEx:'None'},
+{name:'Jack',email:'jack@email.com',age:33,dept:'Operations',gradCourse:'BA',gradYear:2015,gradPerf:'Average',postgrad:false,workBefore:true,workEx:'3+years'},
+{name:'John',email:'john@email.com',age:24,dept:'Technology',gradCourse:'B.Tech',gradYear:2015,gradPerf:'Good',postgrad:false,workBefore:false,workEx:'None'},
+{name:'Edwards',email:'edwards@email.com',age:29,dept:'Accounts',gradCourse:'B.Com',gradYear:2015,gradPerf:'Excellent',postgrad:true,workBefore:true,workEx:'3+years'},
+{name:'Tim',email:'tim001@email.com',age:31,dept:'Operations',gradCourse:'BSc',gradYear:2015,gradPerf:'Average',postgrad:false,workBefore:true,workEx:'0-1year'},
+{name:'Julia',email:'julia@email.com',age:28,dept:'Technology',gradCourse:'B.Tech',gradYear:2015,gradPerf:'Excellent',postgrad:true,workBefore:true,workEx:'1-3years'},
+{name:'Steve',email:'steve@email.com',age:25,dept:'Operations',gradCourse:'BA',gradYear:2015,gradPerf:'Good',postgrad:false,workBefore:true,workEx:'0-1year'},
+{name:'Sam',email:'sam77@email.com',age:33,dept:'HR',gradCourse:'BBA',gradYear:2015,gradPerf:'Good',postgrad:false,workBefore:true,workEx:'1-3years'}];
+   
+
+ const expense = [{name:'John',category:'Local Travel',billId:'NP7561',amount:64,payment:'Self',approved:true},
+   {name:'Anna',category:'Communication',billId:'BN8561',amount:39,payment:'Self',approved:false},
+   {name:'Edwards',category:'Local Travel',billId:'AT5461',amount:58,payment:'Corporate Card',approved:true},
+   {name:'Julia',category:'Local Travel',billId:'RR5492',amount:71,payment:'Self',approved:true},
+   {name:'Julia',category:'Out of City Travel',billId:'KT8785',amount:277,payment:'Bill to Company',approved:true},
+   {name:'Edwards',category:'Others',billId:'UR0400',amount:25,payment:'Corporate Card',approved:false},
+   {name:'Edwards',category:'Out of City Travel',billId:'CC6586',amount:305,payment:'Corporate Card',approved:false},
+   {name:'Julia',category:'Communication',billId:'DL3425',amount:43,payment:'Self',approved:false},
+   {name:'Julia',category:'Out of City Travel',billId:'MW65775',amount:248,payment:'Bill to Company',approved:true},
+   {name:'Edwards',category:'Others',billId:'JR56732',amount:52,payment:'Corporate Card',approved:true},
+   {name:'Julia',category:'Out of City Travel',billId:'BK0074',amount:405,payment:'Bill to Company',approved:false},
+   {name:'Edwards',category:'Communication',billId:'JR56732',amount:72,payment:'Corporate Card',approved:true}];        
+const pay = [{display:'Corporate Card',value:'Corporate Card'},
+         {display:'Bill to Company',value:'Bill to Company'},
+          {display:'Self',value:'Self'}];
+      
+
+
+/* const employe = ['Anna','Edwards','Jack','Julia','John','Mary','Sam','Steve','Tim'];
+
+const category = ['Communication','Local Travel','Out of City Travel','Others'];   */
+
+const dep = ['HR','Accounts','Operations','Technology'];
+
+/* let years = [];
+
+for(let i=2000;i<=2020;i++){
+  years.push(i);
+}
+
+const grad = ['A','B','C','D'];
+const exper = ['None','0-1year','1-3years','3+years'];   */
+
+          var curIndex = -1;
+          let editIndex=-1;
+          let editIndex1=-1;
+          let myperson = {};
+          let errors = {};
+          let errors1 = {};
+          let myexpense = {};
+
+        show();
+        
+   function show(active=0,exp){
+    let str = makeNavbar(active);
+    active===1? str+=showProductTable() : str+='';
+    active===2 ? str+=showform() : str+='';
+    active===3 ? str+=department() : str+='';
+     active===4 ? str+=adddept() : str+='';
+     active===5 ? str+=change() : str+='';
+     active===6 ? str+=expenseTable(exp) : str+='';
+     active===7 ? str+=addExp() : str+='';
+     
+
+      document.getElementById('show').innerHTML = str;
+    
+   }
+   function showData(){
+    editIndex=-1;
+    myperson={};
+    show(1);
+   }
+   function addProductForm(){
+    show(2);
+   }
+   function department1(){
+    show(3);
+   }
+    function adddept1(){
+    show(4);
+   }
+   function change1(){
+    show(5);
+   }
+   function expense1(exp){
+
+    show(6,exp);
+   }
+   function addExpense1(){
+    show(7);
+   }
+
+
+////////////////////////////////////////////////PERSON TABLE/////////////////////////////////////////////////
+
+function showProductTable(){
+  let str1 = '<h4>List of Persons</h4>';
+  const arr = data.map((pr,index)=>{
+       
+        let {name,email,age,dept,gradCourse,workEx} = pr;
+         let str = '<div class="row border">';
+        str+=  '<div class="col-1">'+name+'</div>';
+       str+=   '<div class="col-2">'+email+'</div>';
+        str+=   '<div class="col-1">'+age+'</div>';
+        str+=  '<div class="col-2">'+dept+'</div>';
+       str+=   '<div class="col-2">'+gradCourse+'</div>';
+        str+=   '<div class="col-1">'+workEx+'</div>';
+        str+=   '<div class="col-0" onclick="editper('+index+')"><bg color="grey"><i class="fa-sharp fa-solid fa-pen-to-square  style=color:black;text-dark;"></i></font></div>';
+    str+='<div class="col-0" onclick="deletePerson('+index+')"><font color="red"><i class="fa-solid fa-trash"></i></font></div>'
+    str+='<div class="col-0" onclick="expensed('+index+')"><font color="yellow"><i class="fa-solid fa-car-rear"></i></font></div>';
+
+      str+=  '</div>';
+      return str;
+       });
+
+       let table ='<div class="row bg-dark text-white">';
+        table+=  '<div class="col-1" onclick="sort(0)">Name</div>';
+       table+=   '<div class="col-2" onclick="sort(1)">Email</div>';
+       table+=   '<div class="col-1" onclick="sort(2)">Age</div>';
+       table+=  '<div class="col-2" onclick="sort(3)">Dept</div>';
+       table+=   '<div class="col-2" onclick="sort(4)">Graduation</div>';
+       table+=   '<div class="col-1" onclick="sort(5)">Work Ex</div>';
+        table+=   '<div class="col-1" onclick="sort(5)"></div>';
+       table+=   '</div>';
+       table+= arr.join('');
+      let bt ='<button class="btn btn-primary" onclick="change1()">Change view</button>';
+       return str1+table+bt;
+}
+
+
+
+//////////////////////////////////////////// CHANGE ///////////////////////////////////////////////////////////
+
+function change(){
+
+  let str1 = '<h3>List of Persons</h3>';
+  const arr = data.map((pr,index)=>{
+     //  let str = '';
+  let  str= '<div class="col border">';
+   // str+='<div class="col-1">';
+      let {name,email,age,dept,gradCourse,gradYear,gradPerf,postgrad,workBefore,workEx} = pr;
+     
+      //  console.log("index",index);
+              if(curIndex==index){
+                console.log("CI",curIndex);  
+              
+          
+        str+= '<b><font color="red">Name:</font></b>'+''+name+''+'</br>';  
+        str+= '<b><font color="red"> Email:</font></b>'+''+email+''+'</br>';
+        str+=  '<b><font color="red">Age:</font></b>'+''+age+''+'</br>';  
+
+         str+=   '<b><font color="red"> Dept:</font></b>'+''+dept+''+'</br>';   
+        str+=    '<b><font color="red"> Graduation:</font></b>'+''+gradCourse+''+'</br>';
+        str+=    '<b><font color="red"> Year of Graduation:</font></b>'+''+gradYear+''+'</br>';
+        str+=    '<b><font color="red"> Performance in Graduation:</font></b>'+''+gradPerf+''+'</br>';
+        str+=    '<b><font color="red"> Post Graduation:</font></b>'+''+postgrad+''+'</br>';
+        str+=    '<b><font color="red"> Worked Before:</font></b>'+''+workBefore+''+'</br>';
+        str+=    '<b><font color="red"> Work Expirence:</font></b>'+''+workEx+''+'</br>';
+
+        str+='<button class="btn2 btn-primary" onclick=\'lessDetails()\'>Less Details</button>';    
+    }
+
+      else {  
+  
+    str+= '<b><font color="red">Name:</font></b>'+''+name+''+'</br>';  
+        str+= '<b><font color="red"> Email:</font></b>'+''+email+''+'</br>';
+        str+=  '<b><font color="red">Age:</font></b>'+''+age+''+'</br>';  
+         str+=   '<b><font color="red"> Dept:</font></b>'+''+dept+''+'</br>';  
+
+         str+='<button class="btn2 btn-primary" onclick=\'details("'+index+
+        '")\'>More Details</button>';     
+    }
+  str+='</div>';
+    return str;
+       });
+
+       let table = '<div class="row">';    
+
+       table+= arr.join('');
+        table+= '</div>';
+        let bt1 ='<button class="btn btn-primary" onclick="showData()">Orignal view</button>';
+       let html = str1+table+bt1;
+       return html;
+    
+}
+
+//////////////////////////////////////////////// details function/////////////////////////////////////////////
+
+
+function details(data2){
+  console.log("index",data2);
+  curIndex = data2;
+  console.log("curindex",curIndex);
+  change1();
+}
+
+//////////////////////////////////////////////// LESS DETAILS ////////////////////////////////////////////////
+
+function lessDetails(){
+  curIndex=-1;
+  change1();
+}
+///////////////////////////////////////////////////// DEPARTMENT //////////////////////////////////////////////
+const depart = [];
+
+function department(){
+  let str ="";
+  let str2 = '<h5>No department has been defined</h5>';
+  let st = '<h5>List of Departments</h5>';
+  let str1 = depart.map(function(ele){
+     
+   // str = '<div class="row border">';
+        str =  '<li>'+ele+'</li>';
+    
+  return str;
+
+  });
+if(str1.length==0){
+          return str2;
+
+}
+  else{
+    return st+str1;
+  }
+
+}
+
+console.log("depart",depart);
+
+//////////////////////////////////////////////////// ADD DEPARTMENT ///////////////////////////////////////////
+
+function adddept(){
+  let str = makeTextField('dept','Name of the Department','Enter department');
+  str+='<button class="btn btn-primary" onclick="submitdept()">Submit</button>';
+  return str;
+}
+
+/////////////////////////////////////////////////// SUBMIT DEPARTMENT /////////////////////////////////////////
+
+function submitdept(){
+    let dep = document.getElementById('dept').value;
+    
+    depart.push(dep);
+    department1();
+   }
+   console.log("depart",depart);
+
+
+
+
+let years = [];
+
+for(let i=2000;i<=2020;i++){
+  years.push(i);
+}
+
+const grad = [
+        {display:'A',value:'Excellent'},
+         {display:'B',value:'Good'},
+          {display:'C',value:'Average'},
+          {display:'D',value:'BelowAverage'}];
+
+const exper = [{display:'None',value:'None'},
+         {display:'0-1 year',value:'0-1year'},
+          {display:'1-3 year',value:'1-3years'},
+          {display:'3+years',value:'3+years'}];
+
+
+
+///////////////////////////////////////// ADD/EDIT PERSON FORM ///////////////////////////////////////////////
+
+function showform(){
+  let {name='',email='',age='',dept='',gradCourse='',gradYear='',gradPerf='',postgrad=false,workBefore=false,workEx=''} = myperson;
+  console.log("gradPerf",gradPerf);
+  console.log("workEx",workEx);
+ let title = editIndex>=0 ? 'Edit Employees Details' : 'Add a Employee';
+ let str = '<h3 class="text-center">'+title+'</h3>';
+ str += makeTextField('name','Employee Name','Enter the Employee Name',name,errors.name);
+  str+= makeTextField('email','Email','Enter the Email id',email,errors.email);
+  str+= makeTextField('age','Age','Enter the Age',age,errors.age);
+  str+=madeDropdown('dept',dep,'Select the Department',dept,errors.dept);
+  str+= makeTextField('gd','Graduation Degree','What degree did you get in graduation',gradCourse);
+  str+=madeDropdown('year',years,'Select the Graduation Year',gradYear);
+  str+= makeRadios(grad,'Overall Grade in Graduation','grade4',gradPerf);
+  str+=makeCheckbox('cb1','Are you a post graduate',postgrad);
+  str+=makeCheckbox('cb2','Do you have prior work expirence',workBefore);
+  str+= makeRadios(exper,'Years of Work Expirence','ex',workEx,errors.workEx)+'</br>';
+  str+='<button class="btn btn-primary" onclick="submitdata()">Submit</button>';
+  return str;
+}
+//console.log("grade",grad);
+
+
+//////////////////////////////////////////////////SUBMIT DATA/////////////////////////////////////////////////
+
+   function submitdata(){
+    let name1 = document.getElementById('name').value;
+    let email1 = document.getElementById('email').value;
+    let age1 = document.getElementById('age').value;
+    let dept1 = document.getElementById('dept').value;
+    let grad1 = document.getElementById('gd').value;
+     let year1 = document.getElementById('year').value;
+     let grade1 = document.getElementsByName('grade4');
+    let pg = document.getElementById('cb1').checked;
+    let wb = document.getElementById('cb2').checked;
+    let exp1 = document.getElementsByName('ex');
+
+    let exp2 ='';
+    let grade2 ='';
+  for(let i=0;i<exp1.length;i++){
+      if(exp1[i].checked){
+        console.log("ex[i]",exp1[i].value);
+        exp2 = exp1[i].value;
+      }
+      console.log("ex",exp2);
+    }
+     for(let i=0;i<grade1.length;i++){
+      if(grade1[i].checked){
+        grade2 = grade1[i].value;
+      }
+      console.log("pg",grade2);
+    }
+    let pr = {name:name1,email:email1,age:age1,dept:dept1,gradCourse:grad1, gradYear:year1,gradPerf:grade2,postgrad:pg,workBefore:wb,workEx:exp2};
+    if(validate(pr)){
+    editIndex>=0 ? data[editIndex]=pr : data.push(pr);
+ // pro.push(prodName);
+   // data.push(pr);
+    showData();
+  }
+  else{
+    myperson = pr;
+    addProductForm();
+   }
+   }
+   console.log("data",data);
+
+
+
+/////////////////////////////////////////////////// EDIT PERSON ///////////////////////////////////////////////
+
+function editper(index){
+  console.log("in",index);
+editIndex=index;
+  myperson = data[index];
+  addProductForm();
+}
+//////////////////////////////////////////////////// DELETE PERSON ////////////////////////////////////////////
+
+function deletePerson(index){
+    data.splice(index,1);
+    showData();
+}
+//////////////////////////////////////////// VALIDATE /////////////////////////////////////////////////////////
+
+function validate(pr){
+  
+  // empty string = there is no error, or it should have the error message
+       
+   errors.name = pr.name ? '':'Name is mandatory';
+  errors.email = pr.email ? '' : 'Email is mandatory';
+     errors.age = pr.age ? '' : 'Age is mandatory';
+     errors.dept = pr.dept ? '' : 'Select the Department';
+     errors.workEx = pr.workEx ? '':"Choose the applicable work expirence"
+     console.log(errors);
+     return !(errors.name ||errors.email || errors.age || errors.dept || errors.workEx);
+  }
+//////////////////////////////////////////////// EXPENSE TABLE ////////////////////////////////////////////////
+
+function expenseTable(exp1){
+  let exp2='';
+  if(editIndex1>=0){
+   exp2 = exp1.find(function(ele){
+    return ele.name;
+  });
+   
+}
+ console.log("exp2",exp2);
+ console.log("ei",editIndex1);
+
+  let title = editIndex1>=0 ? 'List of Expenses for '+exp2.name+'' : 'List of Expenses for all Employees';
+ let str1 = '<h3 class="text-center">'+title+'</h3>';
+  
+  const arr = exp1.map((pr,index)=>{
+       
+        let {name,category,billId,amount,payment,approved} = pr;
+         let str = '<div class="row border">';
+        str+=  '<div class="col-1">'+name+'</div>';
+       str+=   '<div class="col-2">'+category+'</div>';
+        str+=   '<div class="col-1">'+billId+'</div>';
+        str+=  '<div class="col-2">'+amount+'</div>';
+       str+=   '<div class="col-2">'+payment+'</div>';
+        str+=   '<div class="col-1">'+approved+'</div>';
+        if(approved==false){
+        
+    str+='<button class="btn1 btn-primary" onclick=\'approved('+index+')\'>Approved</button>'; 
+
+        }
+        
+
+      str+=  '</div>';
+      return str;
+       });
+editIndex1=-1;
+let table ='<div class="row bg-dark text-white">';
+        table+=  '<div class="col-1" onclick="sort(0)">Name</div>';
+       table+=   '<div class="col-2" onclick="sort(1)">Category</div>';
+       table+=   '<div class="col-1" onclick="sort(2)">Bill Id</div>';
+       table+=  '<div class="col-2" onclick="sort(3)">Amount</div>';
+       table+=   '<div class="col-2" onclick="sort(4)">Payment</div>';
+       table+=   '<div class="col-1" onclick="sort(5)">Approved</div>';
+        table+=   '<div class="col-1" onclick="sort(5)"></div>';
+       table+=   '</div>';
+       table+= arr.join('');
+      
+       return str1+table;
+
+}
+ 
+
+/////////////////////////////////////////////// APPROVED FUNCTION /////////////////////////////////////////////
+
+function approved(index){
+ 
+ console.log("app",expense[index]);
+ let arr = expense[index];
+ arr.approved=true;
+ 
+ expense1(expense);
+}
+
+/////////////////////////////////////////////// EXPENSE ICON FUNCTION ///////////////////////////////////////////
+
+function expensed(index){
+  editIndex1 = index
+  let arr1 = data[index];
+
+   let arr2 = expense.filter(function(ele){
+   return ele.name==arr1.name;
+  });
+expense1(arr2);
+
+}
+
+
+
+
+/////////////////////////////////////////////////// ADD EXPENSE /////////////////////////////////////////////
+
+const employees = ['Anna','Edwards','Jack','Julia','John','Mary','Sam','Steve','Tim'];
+
+const category1 = ['Communication','Local Travel','Out of City Travel','Others'];
+
+function addExp(){
+
+  let {name='',category='',billId='',amount='',payment='',approved=false} = myexpense;
+let str = '<h3 class="text-center">Add a New Expense</h3>';
+
+  str+=madeDropdown('employ',employees,'Select the Employee',name,errors1.name);
+  str+=madeDropdown('cat',category1,'Select the Category',category,errors1.cat);
+  str+= makeTextField('bill','billId','Enter the bill Id',billId,errors1.bill);
+  str+= makeTextField('amt','amount','Enter the Amount',amount,errors1.amt);
+  str+= makeRadios(pay,'How was the bill paid','bp',payment,errors1.bp);
+  str+=makeCheckbox('cb3','Has the expense been approved',approved);
+  
+  str+='<button class="btn btn-primary" onclick="submitexpense()">Submit</button>';
+  return str;
+}
+
+/////////////////////////////////////////////// SUBMIT EXPENSE /////////////////////////////////////////////////////
+
+function submitexpense(){
+     let name = document.getElementById('employ').value;
+    let category = document.getElementById('cat').value;
+    let billId1 = document.getElementById('bill').value;
+    let amount = document.getElementById('amt').value;
+    let payment = document.getElementsByName('bp');
+    let approved = document.getElementById('cb3').checked;
+    
+console.log("bi",billId1);
+    let payment2 ='';
+    
+  for(let i=0;i<payment.length;i++){
+      if(payment[i].checked){
+      
+        payment2 = payment[i].value;
+      }
+  
+    }
+     
+    let pro = {name:name,category:category,billId:billId1,amount:amount,payment:payment2,approved:approved};
+    if(validate1(pro)){
+     expense.push(pro);
+    expense1(expense);
+  }
+  else{
+    myexpense = pro;
+    addExpense1();
+   }
+
+
+}
+
+
+
+
+/////////////////////////////////////////////// EXPENSE VALIDATE /////////////////////////////////////////////
+function validate1(pro){
+  
+  // empty string = there is no error, or it should have the error message
+       
+   errors1.name = pro.name ? '':'Select the Employee Name';
+  errors1.cat = pro.category ? '' : 'Select the Category';
+     errors1.bill = pro.billId ? '' : 'Bill Id is mandatory';
+     errors1.amt = pro.amount ? '' : 'Amount is mandatory';
+     errors1.bp = pro.payment ? '':"Choose the applicable payment mode"
+     console.log(errors);
+     return !(errors1.name ||errors1.cat || errors1.bill || errors1.amt || errors1.bp);
+  }
+/////////////////////////////////////////////// MAKE RADIOS //////////////////////////////////////////////////
+
+function makeRadios(arr,label,name,radiovalue='',err=''){
+  const arr1 =  arr.map(opt => {
+        let {display,value} = opt;
+    console.log("rv",radiovalue);
+    console.log("opt",opt);
+
+    
+         let checked = radiovalue==value ? 'checked' :'';
+        let str = '<div class="form-check form-check-inline">';
+        str+= '<input class="form-check-input" type="radio" name="'+name+'" value="'+value+'" '+checked+'>';
+        str+= '<label class="form-check-label">'+display+'</label>';
+        str+= '</div>';
+        return str;
+    });
+    let s1 = '<div class="form-check form-check-inline">';
+    s1+= '<label class="form-check-label">'+label+'</label>';
+    s1+='</div>';
+    s1+= arr1.join('');
+     s1+= err ? '<br/><span class="text-danger">'+err+'</span>' : '';
+    return s1;
+    }   
+
+//////////////////////////////////////////////// MAKE CB //////////////////////////////////////////////////////
+
+function makeCheckbox(id,label,checked){
+  let c1 = checked ? 'checked' : '';
+  let str = '<div class="form-check">';
+  str+= '<input type ="checkbox" class="form-check-input" id="'+id+'" '+c1+'>';
+  str+='<label class="form-check-label">'+label+'</label>';
+  str+='</div>';
+  return str;
+}
+///////////////////////////////////////////////// MAKE DD /////////////////////////////////////////////////////
+
+ function madeDropdown(id,options,header,selValue='',err=''){
+  console.log("opt",options);
+   const arr1 = options.map(opt=>{
+        let selected = opt ===selValue ? 'selected' : '';
+        return '<option '+selected+'>'+opt+'</option>';
+      });
+   let s1 = '<div class="form-group">';
+   s1+='<select id ="'+id+'" class="form-control">';
+   let selectedHeader = selValue ? '' : 'selected';
+   s1+='<option value="" disabled '+selectedHeader+'>'+header+'</option>';
+   s1+=arr1.join('');
+   s1+='</select>';
+   s1+= err ? '<span class="text-danger">'+err+'</span>' : '';
+   s1+='</div>';
+   return s1;
+}
+////////////////////////////////////////////////MAKE TEXT FIELD//////////////////////////////////////////////
+
+function makeTextField(id,label,placeholder='',value='',err=''){
+  let str = '<div class="form-group">';
+  str+='<label>'+label+'</label>';
+  str+='<input type ="text" class="form-control" id="'+id+'" placeholder="'+placeholder+'" value="'+value+'">';
+  str+= err ? '<span class="text-danger">'+err+'</span>' : '';
+  str+='</div>';
+  return str;
+}
+
+///////////////////////////////////////////////// SORT ///////////////////////////////////////////////////////
+
+function sort(colNo){
+  switch(colNo){
+    case 0:data.sort((p1,p2)=>p1.name.localeCompare(p2.name));break;
+    case 1:data.sort((p1,p2)=>p1.email.localeCompare(p2.email));break;
+    case 2:data.sort((p1,p2)=>(+p1.age)-(+p2.age));break;
+    case 3:data.sort((p1,p2)=>p1.dept.localeCompare(p2.dept));break;
+    case 4:data.sort((p1,p2)=>p1.gradCourse.localeCompare(p2.gradCourse));break;
+    case 5:data.sort((p1,p2)=>p1.workEx.localeCompare(p2.workEx));break;
+    
+  }
+  showData();
+
+}
+
+////////////////////////////////////////////// MAKE NAVBAR ////////////////////////////////////////////////////
+
+function makeNavbar(active=0){
+  // 1:show products 2: add a product
+  let str ='<nav class="navbar navbar-expand-lg navbar-light bg-light">';
+  str+= '<a class="navbar-brand" href="#">Employee System</a>';
+  str+='<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">';
+  str+='<span class="navbar-toggler-icon"></spna>';
+  str+= '</button>';
+  str+= '<div class="collapse navbar-collapse" id="navbarNavDropdown">';
+  str+= '<ul class="navbar-nav">';
+  let active1 = active===1 ? 'active':'';
+  let active2 = active===2 ? 'active':'';
+  let active3 = active===3 ? 'active':'';
+  let active4 = active===4 ? 'active':'';
+  let active5 = active===5 ? 'active':'';
+  let active6 = active===6 ? 'active':'';
+
+  str+= '<li class="nav-item '+active1+'">';
+  
+  str+= '<a class="nav-link" onclick="showData()">Show Employees</a>';
+  str+= '</li>';
+  str+= '<li class="nav-item '+active2+'">';
+  str+= '<a class="nav-link" onclick="addProductForm()">Add an Employee</a>';
+  str+= '</li>';
+  str+= '<li class="nav-item '+active3+'">';
+  str+= '<a class="nav-link" onclick="department1()">Department</a>';
+  str+= '</li>';
+   str+= '<li class="nav-item '+active4+'">';
+  str+= '<a class="nav-link" onclick="adddept1()">Add a Dept</a>';
+  str+= '</li>';
+  str+= '<li class="nav-item '+active5+'">';
+  str+= '<a class="nav-link" onclick="expense1(expense)">Expense</a>';
+  str+= '</li>';
+  str+= '<li class="nav-item '+active6+'">';
+  str+= '<a class="nav-link" onclick="addExpense1()">Add an Expense</a>';
+  str+= '</li>';
+  
+  str+='</ul>';
+  str+='</div>';
+  str+='</nav>';
+  return str;
+}
+
+
+
+        </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
